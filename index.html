@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="theme-color" content="#3F51B5">
+
+    <title>ROS Regex Numeric Range Generator</title>
+    <meta name="description" content="A utility that can generate a regex code to match any range of numbers.">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@0.43.1/dist/material-components-web.min.css">
+
+    <style>
+        :root {
+            --mdc-theme-primary: #3f51b5;
+            --mdc-theme-secondary: #f44336;
+            --mdc-theme-on-primary: #ffffff;
+            --mdc-theme-on-secondary: #ffffff;
+        }
+        
+        :root body {
+            background-color: #fafafa;
+        }
+        
+        :root body .ribbon {
+            top: 0;
+            z-index: -1;
+            background-color: #3f51b5;
+            width: 100%;
+            height: 10rem;
+            position: absolute;
+        }
+        
+        :root body .main-content {
+            background-color: #ffffff;
+            border-radius: 4px;
+            margin: 20px;
+            padding: 20px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        :root body .generator--input {
+            width: calc(50% - 4px);
+        }
+        
+        :root body .generator--max {
+            float: right;
+        }
+        
+        :root body .generator--input-seperator {
+            display: none;
+        }
+        
+        :root body .generator--output {
+            width: 100%;
+        }
+        
+        :root body .generator--progress {
+            bottom: 0;
+            position: fixed;
+        }
+        
+        :root body .generator--copy {
+            position: fixed;
+            right: 16px;
+            top: -16px;
+            z-index: 1;
+        }
+        
+        @media only screen and (max-width: 565px) {
+            :root body .generator--input {
+                width: 100%;
+            }
+            :root body .generator--max {
+                float: initial;
+            }
+            :root body .generator--input-seperator {
+                display: block;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+</head>
+
+<body>
+
+    <div class="ribbon mdc-elevation--z4"></div>
+    <main class="main-content mdc-typography mdc-elevation--z8">
+        <h1 class="mdc-typography--headline2">ROS Regex Numeric Range Generator</h1>
+        <p class="mdc-typography--body1">A utility that can generate a regex code to match any range of numbers.</p>
+        <div class="generator--min generator--input mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField">
+            <input type="number" maxlength="13" min="0" id="text-field-1" class="mdc-text-field__input">
+            <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                    <label for="text-field-1" class="mdc-floating-label">Minimum Value</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+            </div>
+        </div>
+        <br class="generator--input-seperator">
+        <br class="generator--input-seperator">
+        <div class="generator--max generator--input mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField">
+            <input type="number" maxlength="13" min="0" id="text-field-2" class="mdc-text-field__input">
+            <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                    <label for="text-field-2" class="mdc-floating-label">Maximum Value</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="options mdc-form-field">
+            <div class="options--match-whole-word mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
+                <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1" />
+                <div class="mdc-checkbox__background">
+                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                        <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                    </svg>
+                    <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+            </div>
+            <label for="checkbox-1">Match whole word</label>
+            <div class="options--match-whole-line mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
+                <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-2" />
+                <div class="mdc-checkbox__background">
+                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                        <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                    </svg>
+                    <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+            </div>
+            <label for="checkbox-2">Match whole line</label>
+            <div class="options--match-leading-zero mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
+                <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-3" />
+                <div class="mdc-checkbox__background">
+                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                        <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                    </svg>
+                    <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+            </div>
+            <label for="checkbox-3">Match leading zero</label>
+        </div>
+        <br>
+        <br>
+        <div class="generator--output mdc-text-field mdc-text-field--textarea" data-mdc-auto-init="MDCTextField">
+            <button class="generator--copy mdc-fab mdc-fab--mini" aria-label="Copy to clipboard" data-mdc-auto-init="MDCRipple" data-clipboard-target="#generator--output-native">
+
+                <svg class="mdc-fab__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0V0z" />
+                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm-1 4H8c-1.1 0-1.99.9-1.99 2L6 21c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V11l-6-6zM8 21V7h6v5h5v9H8z" />
+                </svg>
+            </button>
+            <textarea id="generator--output-native" class="mdc-text-field__input" rows="5" readonly></textarea>
+            <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                    <label for="generator--output-native" class="mdc-floating-label">Generated Regex</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+            </div>
+            <div role="progressbar" class="generator--progress mdc-linear-progress mdc-linear-progress--indeterminate mdc-linear-progress--closed" data-mdc-auto-init="MDCLinearProgress">
+                <div class="mdc-linear-progress__buffering-dots"></div>
+                <div class="mdc-linear-progress__buffer"></div>
+                <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+                    <span class="mdc-linear-progress__bar-inner"></span>
+                </div>
+                <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+                    <span class="mdc-linear-progress__bar-inner"></span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="copy-success mdc-snackbar mdc-snackbar--leading" data-mdc-auto-init="MDCSnackbar">
+        <div class="mdc-snackbar__surface">
+            <div class="mdc-snackbar__label" role="status" aria-live="polite">
+                Copied regex to clipboard.
+            </div>
+        </div>
+    </div>
+
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <script src="https://unpkg.com/material-components-web@0.43.1/dist/material-components-web.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    <script>
+        mdc.autoInit();
+
+        function handleChange() {
+            if (
+                document.querySelector(".generator--min").MDCTextField.value ===
+                document.querySelector(".generator--max").MDCTextField.value)
+
+                document.querySelector("div.generator--progress").MDCLinearProgress.open();
+            if (
+                document.querySelector(".generator--min").MDCTextField.value ===
+                document.querySelector(".generator--max").MDCTextField.value) {
+                document.querySelector(
+                    ".generator--output").
+                MDCTextField.value = document.querySelector(
+                    ".generator--min").
+                MDCTextField.value;
+                document.querySelector("div.generator--progress").MDCLinearProgress.close();
+            } else {
+                RegNumericRange(
+                    document.querySelector(".generator--min").MDCTextField.value,
+                    document.querySelector(".generator--max").MDCTextField.value, {
+                        MatchWholeWord: document.querySelector(".options--match-whole-word").
+                        MDCCheckbox.checked,
+                        MatchWholeLine: document.querySelector(".options--match-whole-line").
+                        MDCCheckbox.checked,
+                        MatchLeadingZero: document.querySelector(".options--match-leading-zero").
+                        MDCCheckbox.checked,
+                        showProcess: false
+                    }).
+
+                generate(function(_ref) {
+                    var success = _ref.success,
+                        data = _ref.data;
+                    if (success === true) {
+                        document.querySelector(".generator--output").MDCTextField.value =
+                            data.pattern;
+                    }
+                    document.
+                    querySelector("div.generator--progress").
+                    MDCLinearProgress.close();
+                });
+            }
+        }
+
+        $(".generator--min, .generator--max").on("input", function() {
+            handleChange();
+        });
+
+        $(
+            ".options--match-whole-word, .options--match-whole-line, .options--match-leading-zero").
+        change(function() {
+            handleChange();
+        });
+
+        var copy = new ClipboardJS(".generator--copy");
+
+        copy.on("success", function(e) {
+            document.querySelector(".copy-success").MDCSnackbar.open();
+            e.clearSelection();
+        });
+    </script>
+
+</body>
+
+</html>
