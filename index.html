@@ -13,115 +13,281 @@
 
     <link rel="shortcut icon" href="favicon.ico">
 
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@0.43.1/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/2.3.0/material-components-web.min.css" integrity="sha256-UMGcubpjEU+onPQm1p5+pJ3EeXD+qIvDcAFZNMls68g=" crossorigin="anonymous" />
 
     <style>
-        :root {
+        body {
             --mdc-theme-primary: #3f51b5;
             --mdc-theme-secondary: #f44336;
-            --mdc-theme-on-primary: #ffffff;
-            --mdc-theme-on-secondary: #ffffff;
-        }
-        
-        :root body {
             background-color: #fafafa;
         }
         
-        :root body .ribbon {
+        body .ribbon {
             top: 0;
             z-index: -1;
-            background-color: #3f51b5;
+            background-color: var(--mdc-theme-primary, #6200ee);
             width: 100%;
             height: 10rem;
             position: absolute;
         }
         
-        :root body .main-content {
-            background-color: #ffffff;
+        body .main-content {
+            background-color: white;
             border-radius: 4px;
-            margin: 20px;
-            padding: 20px;
-            min-height: calc(100vh - 80px);
+            margin: 1.5rem;
+            padding: 2rem;
+            min-height: calc(100vh - 7rem);
         }
         
-        :root body .generator--input {
-            width: calc(50% - 4px);
+        body .main-content .gen__input {
+            width: calc(50% - 0.25rem);
         }
         
-        :root body .generator--max {
+        body .main-content .gen__max {
             float: right;
         }
         
-        :root body .generator--input-seperator {
-            display: none;
+        body .main-content .gen__shorthand,
+        body .main-content .gen__relax {
+            margin-left: 0.5rem;
         }
         
-        :root body .generator--output {
-            width: 100%;
-        }
-        
-        :root body .generator--progress {
-            bottom: 0;
-            position: fixed;
-        }
-        
-        :root body .generator--copy {
-            position: fixed;
-            right: 16px;
-            top: -16px;
+        body .main-content .gen__copy {
+            position: absolute;
+            right: 20px;
+            top: -20px;
             z-index: 1;
         }
         
-        @media only screen and (max-width: 565px) {
-            :root body .generator--input {
+        body .main-content img {
+            max-width: 100%;
+        }
+        
+        body .main-content .mdc-button.mdc-button--raised {
+            background-color: var(--mdc-theme-secondary, #018786);
+        }
+        
+        body .main-content .theme-toggle {
+            position: absolute;
+            top: 0.5rem;
+            right: 3rem;
+        }
+        
+        body .main-content a {
+            color: var(--mdc-theme-primary, #6200ee);
+        }
+        
+        body .main-content::-moz-selection {
+            background-color: var(--mdc-theme-primary, #6200ee);
+            color: white;
+        }
+        
+        body .main-content::selection {
+            background-color: var(--mdc-theme-primary, #6200ee);
+            color: white;
+        }
+        
+        body .main-content #carbonads {
+            margin-bottom: 1rem;
+            float: right;
+            border-radius: 6px;
+            box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+            font-family: Roboto, sans-serif;
+            line-height: 28px;
+            padding: 8px;
+            box-sizing: border-box;
+            transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @media only screen and (max-width: 425px) {
+            body .main-content #carbonads {
                 width: 100%;
             }
-            :root body .generator--max {
-                float: initial;
+        }
+        
+        body .main-content #carbonads:hover {
+            box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+        }
+        
+        body .main-content #carbonads .carbon-wrap .carbon-img > img {
+            margin-right: 9px;
+            float: left;
+        }
+        
+        @media only screen and (max-width: 400px) {
+            body .main-content #carbonads .carbon-wrap .carbon-img > img {
+                width: auto;
+                max-width: 130px;
+                height: 50px;
             }
-            :root body .generator--input-seperator {
-                display: block;
-            }
+        }
+        
+        body .main-content #carbonads .carbon-wrap .carbon-text {
+            color: #637381;
+            font-weight: 300;
+            display: block;
+            font-size: 12px;
+            line-height: 15.96px;
+            margin-bottom: 0;
+            margin-top: 8px;
+            text-decoration: none;
+        }
+        
+        body .main-content #carbonads .carbon-poweredby {
+            color: #c5cdd0;
+            font-size: 8px;
+            font-weight: 500;
+            line-height: 10px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        
+        body .full-width {
+            width: 100%;
+        }
+        
+        body.setting--dark {
+            background-color: #121212 !important;
+            --mdc-theme-text-primary-on-background: white;
+            --mdc-theme-text-secondary-on-background: white;
+            --mdc-theme-text-icon-on-background: white;
+        }
+        
+        body.setting--dark::-webkit-scrollbar {
+            background-color: #424242;
+        }
+        
+        body.setting--dark .main-content {
+            color: white;
+            background-color: #212121;
+        }
+        
+        body.setting--dark .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate) ~ .mdc-checkbox__background {
+            border-color: white;
+        }
+        
+        body.setting--dark .mdc-select__selected-text,
+        body.setting--dark .mdc-text-field__input,
+        body.setting--dark .mdc-floating-label,
+        body.setting--dark #carbonads .carbon-text {
+            color: white !important;
+        }
+        
+        body.setting--dark .mdc-notched-outline__leading,
+        body.setting--dark .mdc-notched-outline__notch,
+        body.setting--dark .mdc-notched-outline__trailing {
+            border-color: white !important;
+        }
+        
+        body.setting--dark a {
+            color: #5c6bc0;
+        }
+        
+        body.setting--dark::-moz-selection {
+            background-color: #c5cae9;
+            color: black;
+        }
+        
+        body.setting--dark::selection {
+            background-color: #c5cae9;
+            color: black;
+        }
+        
+        body.setting--animate-colours {
+            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.setting--animate-colours .main-content,
+        body.setting--animate-colours a,
+        body.setting--animate-colours::-moz-selection {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition-property: background-color, color;
+        }
+        
+        body.setting--animate-colours .main-content,
+        body.setting--animate-colours a,
+        body.setting--animate-colours::selection {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition-property: background-color, color;
+        }
+        
+        body::-webkit-scrollbar {
+            border-radius: 100px;
+            background-color: transparent;
+            width: 8px;
+            height: 8px;
+        }
+        
+        body::-webkit-scrollbar-button {
+            height: 0;
+            width: 0;
+        }
+        
+        body::-webkit-scrollbar-corner {
+            background-color: transparent;
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            border-radius: 100px;
+            background-color: rgba(0, 0, 0, 0.2);
+            min-height: 28px;
+        }
+        
+        body::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        body::-webkit-scrollbar-thumb:active {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        body::-webkit-scrollbar-track {
+            background-clip: padding-box;
+            border-width: 0 0 0 4px;
         }
     </style>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
 
 </head>
 
 <body>
-
     <div class="ribbon mdc-elevation--z4"></div>
     <main class="main-content mdc-typography mdc-elevation--z8">
+        <script async src="https://cdn.carbonads.com/carbon.js?serve=CK7I6K3E&amp;placement=wwwrichie-bendallml" id="_carbonads_js"></script>
+        <button class="theme-toggle mdc-fab mdc-fab--mini" aria-label="Toggle theme" data-mdc-auto-init="MDCRipple">
+            <svg class="theme-toggle__svg mdc-fab__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path d="M11 7l-3.2 9h1.9l.7-2h3.2l.7 2h1.9L13 7h-2zm-.15 5.65L12 9l1.15 3.65h-2.3zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zm-2 5.79V18h-3.52L12 20.48 9.52 18H6v-3.52L3.52 12 6 9.52V6h3.52L12 3.52 14.48 6H18v3.52L20.48 12 18 14.48z" />
+            </svg>
+        </button>
         <h1 class="mdc-typography--headline2">ROS Regex Numeric Range Generator</h1>
         <p class="mdc-typography--body1">A utility that can generate a regex code to match any range of numbers.</p>
-        <div class="generator--min generator--input mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField">
-            <input type="number" maxlength="13" min="0" id="text-field-1" class="mdc-text-field__input">
+        <label class="gen__min gen__input mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField">
+            <input type="number" min="0" maxlength="20" class="mdc-text-field__input">
             <div class="mdc-notched-outline">
                 <div class="mdc-notched-outline__leading"></div>
                 <div class="mdc-notched-outline__notch">
-                    <label for="text-field-1" class="mdc-floating-label">Minimum Value</label>
+                    <span class="mdc-floating-label">Minimum Value</span>
                 </div>
                 <div class="mdc-notched-outline__trailing"></div>
             </div>
-        </div>
-        <br class="generator--input-seperator">
-        <br class="generator--input-seperator">
-        <div class="generator--max generator--input mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField">
-            <input type="number" maxlength="13" min="0" id="text-field-2" class="mdc-text-field__input">
+        </label>
+        <label class="gen__max gen__input mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField">
+            <input type="number" min="0" maxlength="20" class="mdc-text-field__input">
             <div class="mdc-notched-outline">
                 <div class="mdc-notched-outline__leading"></div>
                 <div class="mdc-notched-outline__notch">
-                    <label for="text-field-2" class="mdc-floating-label">Maximum Value</label>
+                    <span class="mdc-floating-label">Maximum Value</span>
                 </div>
                 <div class="mdc-notched-outline__trailing"></div>
             </div>
-        </div>
+        </label>
         <br>
         <br>
-        <div class="options mdc-form-field">
-            <div class="options--match-whole-word mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
+        <div class="mdc-form-field" data-mdc-auto-init="MDCFormField">
+            <div class="gen__capture mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
                 <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1" />
                 <div class="mdc-checkbox__background">
                     <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
@@ -130,8 +296,8 @@
                     <div class="mdc-checkbox__mixedmark"></div>
                 </div>
             </div>
-            <label for="checkbox-1">Match whole word</label>
-            <div class="options--match-whole-line mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
+            <label for="checkbox-1">Capture</label>
+            <div class="gen__shorthand mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
                 <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-2" />
                 <div class="mdc-checkbox__background">
                     <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
@@ -140,9 +306,9 @@
                     <div class="mdc-checkbox__mixedmark"></div>
                 </div>
             </div>
-            <label for="checkbox-2">Match whole line</label>
-            <div class="options--match-leading-zero mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
-                <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-3" />
+            <label for="checkbox-2">Shorthand</label>
+            <div class="gen__relax mdc-checkbox" data-mdc-auto-init="MDCCheckbox">
+                <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-3" checked />
                 <div class="mdc-checkbox__background">
                     <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
                         <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
@@ -150,112 +316,116 @@
                     <div class="mdc-checkbox__mixedmark"></div>
                 </div>
             </div>
-            <label for="checkbox-3">Match leading zero</label>
+            <label for="checkbox-3">Relax Zeros</label>
         </div>
         <br>
         <br>
-        <div class="generator--output mdc-text-field mdc-text-field--textarea" data-mdc-auto-init="MDCTextField">
-            <button class="generator--copy mdc-fab mdc-fab--mini" aria-label="Copy to clipboard" data-mdc-auto-init="MDCRipple" data-clipboard-target="#generator--output-native">
-
+        <div class="gen__res mdc-text-field mdc-text-field--textarea mdc-text-field--fullwidth" data-mdc-auto-init="MDCTextField">
+            <button class="gen__copy mdc-fab mdc-fab--mini" title="Copy to clipboard" data-clipboard-target=".gen__res textarea" data-mdc-auto-init="MDCRipple">
                 <svg class="mdc-fab__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="none" d="M0 0h24v24H0V0z" />
-                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm-1 4H8c-1.1 0-1.99.9-1.99 2L6 21c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V11l-6-6zM8 21V7h6v5h5v9H8z" />
+                    <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
                 </svg>
             </button>
-            <textarea id="generator--output-native" class="mdc-text-field__input" rows="5" readonly></textarea>
+            <textarea id="textarea" class="mdc-text-field__input" rows="6" readonly></textarea>
             <div class="mdc-notched-outline">
                 <div class="mdc-notched-outline__leading"></div>
                 <div class="mdc-notched-outline__notch">
-                    <label for="generator--output-native" class="mdc-floating-label">Generated Regex</label>
+                    <label for="textarea" class="mdc-floating-label">Generated Regex</label>
                 </div>
                 <div class="mdc-notched-outline__trailing"></div>
             </div>
-            <div role="progressbar" class="generator--progress mdc-linear-progress mdc-linear-progress--indeterminate mdc-linear-progress--closed" data-mdc-auto-init="MDCLinearProgress">
-                <div class="mdc-linear-progress__buffering-dots"></div>
-                <div class="mdc-linear-progress__buffer"></div>
-                <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
-                    <span class="mdc-linear-progress__bar-inner"></span>
-                </div>
-                <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
-                    <span class="mdc-linear-progress__bar-inner"></span>
-                </div>
+        </div>
+        <div class="gen__snackbar mdc-snackbar mdc-snackbar--leading" data-mdc-auto-init="MDCSnackbar">
+            <div class="mdc-snackbar__surface">
+                <div class="mdc-snackbar__label" role="status" aria-live="polite"></div>
             </div>
         </div>
     </main>
-    <div class="copy-success mdc-snackbar mdc-snackbar--leading" data-mdc-auto-init="MDCSnackbar">
-        <div class="mdc-snackbar__surface">
-            <div class="mdc-snackbar__label" role="status" aria-live="polite">
-                Copied regex to clipboard.
-            </div>
-        </div>
-    </div>
 
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-    <script src="https://unpkg.com/material-components-web@0.43.1/dist/material-components-web.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/erwinyusrizal/RegexNumericRangeGenerator@4c4d260b9a1eac5d28d18283b097adfec57f918c/RegNumericRange.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js" integrity="sha256-1eSvllkLdrfxD6G8RGF9h+mQuD93Af5+GdPBMNc7uMQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/2.3.0/material-components-web.min.js" integrity="sha256-BzmZ5n2DFLOgqmbLkakCq47YbU8n4s93pqTIrwrgXKM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://wzrd.in/standalone/to-regex-range@5.0.1" integrity="sha384-sifpuF7qmvL+nAWjoBovuMNCOgOWZ0cXUGs5UGdAmY6daPOL6atroXBKfVtyLYGD" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
     <script>
         mdc.autoInit();
+        Array.prototype.cycle = function(str) {
+            var i = this.indexOf(str);
+            if (i === -1)
+                return undefined;
+            return this[(i + 1) % this.length];
+        };
+        var handleTheme = function() {
+            switch (localStorage.getItem("theme")) {
+                case "light":
+                    $(".theme-toggle__svg").html("<path fill=\"none\" d=\"M0 0h24v24H0V0z\"/><path d=\"M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zm-2 5.79V18h-3.52L12 20.48 9.52 18H6v-3.52L3.52 12 6 9.52V6h3.52L12 3.52 14.48 6H18v3.52L20.48 12 18 14.48zM12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z\"/><circle cx=\"12\" cy=\"12\" r=\"2.5\"/>");
+                    $("body").removeClass("setting--dark");
+                    break;
+                case "dark":
+                    $(".theme-toggle__svg").html("<path fill=\"none\" d=\"M0 0h24v24H0V0z\"/><path d=\"M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zm-2 5.79V18h-3.52L12 20.48 9.52 18H6v-3.52L3.52 12 6 9.52V6h3.52L12 3.52 14.48 6H18v3.52L20.48 12 18 14.48zM12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z\"/>");
+                    $("body").addClass("setting--dark");
+                    break;
+                default:
+                    $(".theme-toggle__svg").html("<path fill=\"none\" d=\"M0 0h24v24H0V0z\"/><path d=\"M11 7l-3.2 9h1.9l.7-2h3.2l.7 2h1.9L13 7h-2zm-.15 5.65L12 9l1.15 3.65h-2.3zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zm-2 5.79V18h-3.52L12 20.48 9.52 18H6v-3.52L3.52 12 6 9.52V6h3.52L12 3.52 14.48 6H18v3.52L20.48 12 18 14.48z\"/>");
+                    var hours = new Date().getHours();
+                    $("body").toggleClass("setting--dark", hours <= 6 ||
+                        hours >= 20 ||
+                        window.matchMedia("(prefers-color-scheme: dark)").matches ||
+                        window.matchMedia("(-ms-high-contrast: white-on-black)").matches);
+            }
+
+        };
+        if (["auto", "light", "dark"].indexOf(localStorage.getItem("theme")) === -1)
+            localStorage.setItem("theme", "auto");
+        handleTheme();
+        $("body").addClass("setting--animate-colours");
+        $(".theme-toggle").click(function() {
+            localStorage.setItem("theme", ["auto", "light", "dark"].cycle(localStorage.getItem("theme")));
+            handleTheme();
+        });
 
         function handleChange() {
-            if (
-                document.querySelector(".generator--min").MDCTextField.value ===
-                document.querySelector(".generator--max").MDCTextField.value)
-
-                document.querySelector("div.generator--progress").MDCLinearProgress.open();
-            if (
-                document.querySelector(".generator--min").MDCTextField.value ===
-                document.querySelector(".generator--max").MDCTextField.value) {
-                document.querySelector(
-                    ".generator--output").
-                MDCTextField.value = document.querySelector(
-                    ".generator--min").
-                MDCTextField.value;
-                document.querySelector("div.generator--progress").MDCLinearProgress.close();
-            } else {
-                RegNumericRange(
-                    document.querySelector(".generator--min").MDCTextField.value,
-                    document.querySelector(".generator--max").MDCTextField.value, {
-                        MatchWholeWord: document.querySelector(".options--match-whole-word").
-                        MDCCheckbox.checked,
-                        MatchWholeLine: document.querySelector(".options--match-whole-line").
-                        MDCCheckbox.checked,
-                        MatchLeadingZero: document.querySelector(".options--match-leading-zero").
-                        MDCCheckbox.checked,
-                        showProcess: false
-                    }).
-
-                generate(function(_ref) {
-                    var success = _ref.success,
-                        data = _ref.data;
-                    if (success === true) {
-                        document.querySelector(".generator--output").MDCTextField.value =
-                            data.pattern;
-                    }
-                    document.
-                    querySelector("div.generator--progress").
-                    MDCLinearProgress.close();
+            var min = $(".gen__min").get(0).MDCTextField;
+            var max = $(".gen__max").get(0).MDCTextField;
+            var res = $(".gen__res").get(0).MDCTextField;
+            if (max.value === min.value)
+                res.value = max.value;
+            else
+            if (min.value && max.value) {
+                res.value = toRegexRange(min.value, max.value, {
+                    capture: $(".gen__capture").get(0).MDCCheckbox.checked,
+                    shorthand: $(".gen__shorthand").get(0).MDCCheckbox.checked,
+                    relaxZeros: $(".gen__relax").get(0).MDCCheckbox.checked
                 });
+
             }
         }
-
-        $(".generator--min, .generator--max").on("input", function() {
-            handleChange();
+        $(".gen__min, .gen__max").on("input", function() {
+            return handleChange();
         });
-
-        $(
-            ".options--match-whole-word, .options--match-whole-line, .options--match-leading-zero").
-        change(function() {
-            handleChange();
+        $(".gen__capture, .gen__shorthand, .gen__relax").click(function() {
+            return handleChange();
         });
-
-        var copy = new ClipboardJS(".generator--copy");
-
-        copy.on("success", function(e) {
-            document.querySelector(".copy-success").MDCSnackbar.open();
-            e.clearSelection();
+        var snackBarMessage = function(message) {
+            $(".gen__snackbar").get(0).MDCSnackbar.close();
+            $(".gen__snackbar").get(0).MDCSnackbar.labelText = message;
+            $(".gen__snackbar").get(0).MDCSnackbar.open();
+        };
+        var setupCopy = function(el, success, error) {
+            var clipboard = new ClipboardJS(el);
+            clipboard.on("success", function(e) {
+                e.clearSelection();
+                success();
+            });
+            clipboard.on("error", function() {
+                return error();
+            });
+        };
+        setupCopy(".gen__copy", function() {
+            return snackBarMessage("Copied regex to clipboard.");
+        }, function() {
+            return snackBarMessage("Failed to copy regex to clipboard.");
         });
     </script>
 
